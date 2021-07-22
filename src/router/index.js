@@ -1,22 +1,52 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Tutors from '../components/views/tutors/Tutors'
+import TutorDetails from '../components/views/tutors/TutorDetails'
+import TutorRegistration from '../components/views/tutors/TutorRegistration'
+import ContactTutor from '../components/views/requests/ContactTutor'
+import Requests from '../components/views/requests/Requests'
+import NotFound from '../components/views/notFound/NotFound'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/tutors'
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/tutors',
+    name: 'Tutors',
+    component: Tutors
+  },
+  {
+    path: '/tutors/:id',
+    name: 'Tutor',
+    component: TutorDetails,
+    props: true,
+    children: [
+      {
+        path: 'contact',
+        name: 'Contact',
+        props: true,
+        component: ContactTutor
+      }
+    ]
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: TutorRegistration
+  },
+  {
+    path: '/requests.js',
+    name: 'Requests',
+    component: Requests
+  },
+  {
+    path: '/:notFound(.*)',
+    name: 'Not found',
+    component: NotFound
   }
 ]
 
